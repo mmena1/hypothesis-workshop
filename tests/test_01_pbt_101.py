@@ -56,8 +56,9 @@ def test_square_zero():
     assert result == 0
 
 # Your strategy goes here
-def test_square():
-    pytest.skip()  # Remove this
+@given(st.integers())
+def test_square(value):
+    assert square(value) == value**2
     # Your code goes here
 
 
@@ -82,8 +83,13 @@ def test_sorted_char_list():
     assert sorted(float_list) == [-1232.4232, 0.1, 100.23, 2321]
 
 # strategy goes here
-def test_sorted_list():
-    pytest.skip()  # Remove this
+@given(
+        st.one_of(st.lists(st.characters(), min_size=1),
+                  st.lists(st.integers(), min_size=1),
+                  st.lists(st.floats(allow_nan=False), min_size=1))
+)
+def test_sorted_list(value):
+    assert sorted(value)[-1] == max(value)
     # Your code goes here
 
 

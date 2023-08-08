@@ -30,9 +30,17 @@ def test_sum_closure_property(list):
 # this property in the form of A + B = B + A.
 
 # Our strategy goes here
-def test_sum_commutative_property():
+@given(
+    st.one_of(
+      st.lists(st.integers(), min_size=2, max_size=2),
+      st.lists(st.floats(allow_nan=False), min_size=2, max_size=2),
+      st.lists(st.fractions(), min_size=2, max_size=2)
+    )
+)
+def test_sum_commutative_property(value):
     # Our code goes here
-    pytest.skip()
+    n1, n2 = value
+    assert n1 + n2 == n2 + n1
 
 
 # Example 3: Let's write a test for the associative property.
@@ -42,9 +50,16 @@ def test_sum_commutative_property():
 # not affected by the addition pattern followed.
 
 # Your strategy goes here
-def test_sum_associative_property():
+@given(
+    st.one_of(
+      st.lists(st.integers(), min_size=3),
+      st.lists(st.floats(allow_nan=False, allow_infinity=False), min_size=3),
+      st.lists(st.fractions(), min_size=3)
+    )
+)
+def test_sum_associative_property(value):
     # Our code goes here
-    pytest.skip()
+    assert sum(value) == sum(value[::-1])
 
 # Bonus 1: rewrite the test above using the permutations strategy
 # (https://hypothesis.readthedocs.io/en/latest/data.html#hypothesis.strategies.permutations)
@@ -57,9 +72,17 @@ def test_sum_associative_property():
 # numbers, fractions, integers, and decimals.
 
 # Your strategy goes here
-def test_sum_identity_property():
+@given(
+    st.one_of(
+      st.integers(),
+      st.floats(allow_nan=False, allow_infinity=False),
+      st.fractions(),
+      st.decimals()
+    )
+)
+def test_sum_identity_property(value):
     # Our code goes here
-    pytest.skip()
+    assert value + 0 == value
 
 
 # You don't need to solve this right now.
